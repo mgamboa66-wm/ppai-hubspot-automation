@@ -48,6 +48,16 @@ hs project validate --account staging
 hs project validate --account production
 ```
 
+## Run unit tests
+
+The unit tests use Node's built-in test runner and do not require additional dependencies:
+
+```bash
+node --test test/*.test.js
+```
+
+Run the tests before validating or uploading the project.
+
 ## Deploy to staging
 
 Upload and build the project in the staging account:
