@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { main } = require("../src/app/functions/RecalculateHighestCredential.js");
+const { main } = require("../src/app/functions/recalculate-highest-credential.js");
 
 const run = (inputFields) => main({ body: { inputFields } });
 
