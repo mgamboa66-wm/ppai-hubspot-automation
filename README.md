@@ -1,17 +1,91 @@
-# HubSpot Getting Started Project Template
+# PPAI HubSpot Automation
 
-This is the Getting Started project for HubSpot developer projects. It contains a private app, a CRM card written in React, and a serverless function that the CRM card is able to interact with. This code is intended to help developers get up and running with developer projects quickly and easily.
+This private HubSpot Developer Project provides a custom workflow actions.
 
 ## Requirements
 
-There are a few things that must be set up before you can make use of this getting started project.
+- Node.js and npm
+- HubSpot CLI 7.4 or later
+- A HubSpot Personal Access Key with permission to manage developer projects
 
-- You must have an active HubSpot account.
-- You must have the [HubSpot CLI](https://www.npmjs.com/package/@hubspot/cli) installed and set up.
-- You must have access to developer projects.
+Install or update the CLI:
 
-## Usage
+```bash
+npm install -g @hubspot/cli
+```
 
-The HubSpot CLI enables you to run this project locally so that you may test and iterate quickly. Getting started is simple, just run this HubSpot CLI command in your project directory and follow the prompts:
+## Configure staging and production accounts
 
-`hs project dev`
+Authenticate each HubSpot account separately. The names are local CLI labels; they do not create HubSpot accounts.
+
+```bash
+hs account auth --account=staging
+hs account auth --account=production
+```
+
+When prompted, select the appropriate HubSpot account and provide its Personal Access Key. Use a sandbox or test account for `staging` and the live account for `production`.
+
+Verify the configured accounts:
+
+```bash
+hs account list
+```
+
+You can set a default account, but using `--account` explicitly is safer:
+
+```bash
+hs account use staging
+```
+
+Never commit Personal Access Keys or the CLI global configuration to this repository.
+
+## Validate the project
+
+Run validation against the account you intend to use:
+
+```bash
+hs project validate --account staging
+hs project validate --account production
+```
+
+## Deploy to staging
+
+Upload and build the project in the staging account:
+
+```bash
+hs project upload --account staging --message "Deploy to staging"
+```
+
+If automatic deployment is disabled, deploy the latest build manually:
+
+```bash
+hs project deploy --account staging --deploy-latest-build
+```
+
+## Deploy to production
+
+Validate production first, then upload using the production account label:
+
+```bash
+hs project validate --account production
+hs project upload --account production --message "Deploy to production"
+```
+
+To review a build before deploying it, prevent automatic deployment:
+
+```bash
+hs project upload --account production --skip-auto-deploy --message "Prepare production build"
+hs project deploy --account production --build BUILD_ID
+```
+
+Replace `BUILD_ID` with the build ID shown by the upload command.
+
+## Useful commands
+
+```bash
+hs project info --account staging --json
+hs project open --account staging
+hs project logs --project ppai-hubspot-automation
+```
+
+For more information, see the [HubSpot CLI account commands](https://developers.hubspot.com/docs/developer-tooling/local-development/hubspot-cli/commands/account-commands) and [project commands](https://developers.hubspot.com/docs/developer-tooling/local-development/hubspot-cli/project-commands).

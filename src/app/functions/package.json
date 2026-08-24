@@ -1,7 +1,5 @@
 {
-  "name": "example-function",
-  "version": "0.1.0",
-  "dependencies": {
-    "@hubspot/api-client": "^14.0.1"
-  }
+  "name": "ppai-hubspot-automation-functions",
+  "version": "1.0.0",
+  "private": true
 }

@@ -80,9 +80,15 @@ exports.main = async function main(context = {}) {
     };
 
     return {
-      outputFields: {
-        highest_credential_level: calculateHighestCredential(properties),
-        hs_execution_state: "SUCCESS",
+      statusCode: 200,
+      body: {
+        outputFields: {
+          highest_credential_level: calculateHighestCredential(properties),
+          hs_execution_state: "SUCCESS",
+        },
+      },
+      headers: {
+        "Content-Type": "application/json",
       },
     };
   } catch (error) {
