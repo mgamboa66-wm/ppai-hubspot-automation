@@ -68,7 +68,7 @@ const calculateHighestCredential = (properties = {}) => {
 /**
  * Reads the custom workflow action request and returns its output fields.
  */
-export async function main(context = {}) {
+exports.main = async function main(context = {}) {
   try {
     const rawBody = context.body ?? context;
     const body =
@@ -89,4 +89,4 @@ export async function main(context = {}) {
     console.error("Failed to recalculate highest credential", error);
     throw error;
   }
-}
+};
