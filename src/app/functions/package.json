@@ -1,0 +1,10 @@
+{
+  "name": "example-function",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@hubspot/api-client": "^14.0.1"
+  }
+}
