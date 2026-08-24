@@ -27,31 +27,34 @@ const isValidDate = (value) => {
   return date >= today;
 };
 
+/**
+ * Returns the highest credential level based on the provided properties.
+ */
 const calculateHighestCredential = (properties = {}) => {
   const hasMAS = Boolean(
     properties.mas_issue_date ||
-      properties.mas_recert_date ||
-      properties.mas_lifetime_issue_date
+    properties.mas_recert_date ||
+    properties.mas_lifetime_issue_date,
   );
 
   const hasCAS = Boolean(
     properties.cas_issue_date ||
-      properties.cas_recert_date ||
-      properties.cas_lifetime_issue_date
+    properties.cas_recert_date ||
+    properties.cas_lifetime_issue_date,
   );
 
   const masValid =
     hasMAS &&
     Boolean(
       properties.mas_lifetime_issue_date ||
-        isValidDate(properties.mas_expire_date)
+      isValidDate(properties.mas_expire_date),
     );
 
   const casValid =
     hasCAS &&
     Boolean(
       properties.cas_lifetime_issue_date ||
-        isValidDate(properties.cas_expire_date)
+      isValidDate(properties.cas_expire_date),
     );
 
   if (properties.mas_plus_issue_date) return "MAS+";
@@ -62,7 +65,28 @@ const calculateHighestCredential = (properties = {}) => {
   return "";
 };
 
-module.exports = {
-  calculateHighestCredential,
-  isValidDate,
-};
+/**
+ * Reads the custom workflow action request and returns its output fields.
+ */
+export async function main(context = {}) {
+  try {
+    const rawBody = context.body ?? context;
+    const body =
+      typeof rawBody === "string" ? JSON.parse(rawBody) : rawBody || {};
+
+    const properties = {
+      ...(body.object?.properties || {}),
+      ...(body.inputFields || {}),
+    };
+
+    return {
+      outputFields: {
+        highest_credential_level: calculateHighestCredential(properties),
+        hs_execution_state: "SUCCESS",
+      },
+    };
+  } catch (error) {
+    console.error("Failed to recalculate highest credential", error);
+    throw error;
+  }
+}

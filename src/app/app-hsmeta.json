@@ -2,8 +2,8 @@
   "uid": "get_started_app",
   "type": "app",
   "config": {
-    "description": "A basic static token app for testing",
-    "name": "My Get Started app",
+    "description": "Private HubSpot app containing PPAI workflow actions and HubSpot-hosted automation functions.",
+    "name": "PPAI HubSpot Automation",
     "distribution": "private",
     "auth": {
       "type": "static",
